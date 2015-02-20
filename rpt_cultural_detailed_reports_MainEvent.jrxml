@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_cultural_detailed_reports_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="culname" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT *,Contestant as name,SUM(total_cultural) as total,Team_Name FROM rpt_cultural_with_category Where Cul_Name = $P{culname} group by contestant ORDER BY Cul_Name,total DESC]]>
+	</queryString>
+	<field name="Category_ID" class="java.lang.Integer"/>
+	<field name="Category_Name" class="java.lang.String"/>
+	<field name="Cul_ID" class="java.lang.Integer"/>
+	<field name="Cul_Name" class="java.lang.String"/>
+	<field name="Cr_Description" class="java.lang.String"/>
+	<field name="CrScore" class="java.lang.Double"/>
+	<field name="total_Cultural" class="java.lang.Double"/>
+	<field name="Cul_Percentage" class="java.lang.String"/>
+	<field name="Judge" class="java.lang.String"/>
+	<field name="Contestant" class="java.lang.String"/>
+	<field name="Team_Name" class="java.lang.String"/>
+	<field name="Team_ID" class="java.lang.Integer"/>
+	<field name="JType" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="total" class="java.lang.Double"/>
+	<group name="name">
+		<groupExpression><![CDATA[$F{name}]]></groupExpression>
+	</group>
+	<group name="total">
+		<groupExpression><![CDATA[$F{total}]]></groupExpression>
+	</group>
+	<group name="Team_Name">
+		<groupExpression><![CDATA[$F{Team_Name}]]></groupExpression>
+	</group>
+	<columnHeader>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="73" y="28" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contestant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="28" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Overall Score]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="28" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Team]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="48" width="555" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="73" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="249" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Team_Name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="19" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,3 @@
+Tabulation.Methods.Select_Commands.SplashDemo
+
+-splash:src/Tabulation/Image/tablogo.gif

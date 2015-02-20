@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_overAll_sports_result_subreport1" language="groovy" columnCount="3" pageWidth="595" pageHeight="842" columnWidth="185" columnSpacing="20" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+   CONCAT(Acc_FName,' ',Acc_MName,' ',Acc_FName) as judges
+FROM
+      accounts
+Where
+     Acc_Type = 'Sports Judges'
+and 
+   Acc_Status = 'Active']]>
+	</queryString>
+	<field name="judges" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="2" width="150" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{judges}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="15" y="1" width="150" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,97 @@
+Select CONCAT(P.Part_FName,' ',SUBStr(P.Part_MName,1,1),'. ' ,P.Part_LName)as fullname,
+CONCAT(A.Acc_FName,' ',SUBSTR(A.Acc_MName,1,1),' ',A.Acc_LName)as Judge,
+CC.Cr_Description,CS.CrScore
+from participants P INNER JOIN Attended_culturalevents ACE ON ACE.Part_ID = ACE.Part_ID
+INNER JOIN Cultural_Events CE ON ACE.Cul_ID = CE.Cul_ID
+INNER JOIN Event_Category EC ON EC.Cul_ID = CE.Cul_ID
+INNER JOIN Criteria_Cultural CC ON CC.Cul_ID = CE.Cul_ID OR CC.Category_ID = CC.Category_ID
+INNER JOIN Criteria_Score CS ON CS.Cr_ID = CC.Cr_ID
+CROSS JOIN Accounts A
+
+
+
+
+
+************************************************
+rpt_criteria_with_Category
+
+Select EC.Category_ID,EC.Category_Name,CE.Cul_ID,CE.Cul_Name,CC.Cr_Description,CS.CrScore,CS.Cr_computed,CE.Cul_Percentage,
+CONCAT(A.Acc_FName,' ',SUBSTR(A.Acc_MName,1,1),' ',A.Acc_LName)as Judge,
+CONCAT(P.Part_FName,' ',SUBSTR(P.Part_MName,1,1),'. ',P.Part_LName) as Contestant,T.Team_Name,T.Team_ID
+ from criteria_score CS JOIN Criteria_Cultural CC ON CC.Cr_ID=CS.Cr_ID JOIN
+Event_Category EC ON EC.Category_ID = CC.Category_ID
+JOIN Cultural_Events CE ON CE.Cul_ID = EC.Cul_ID
+JOIN Accounts A ON CS.Acc_ID = A.Acc_ID
+JOIN Attended_culturalEvents ACE ON ACE.ACE_ID = CS.ACE_ID
+JOIN Participants P ON P.Part_ID = ACE.Part_ID
+JOIN Teams T ON T.Team_ID = P.Team_ID
+Where CC.Category_ID  IN
+(Select Category_ID from Event_Category EC JOIN Cultural_Events CE ON CE.Cul_ID = EC.Cul_ID
+Where CE.Cul_Status = 'Active')
+
+**********************************************
+
+rpt_criteria_withno_category
+
+
+Select CE.Cul_ID,CE.Cul_Name,CC.Cr_ID,CC.Cr_Description,CS.CrScore,CS.Cr_Computed,CC.Cr_Percentage,
+CONCAT(A.Acc_FName,' ',SUBSTR(A.Acc_MName,1,1),' ',A.Acc_LName)as Judge,
+CONCAT(P.Part_FName,' ',SUBSTR(P.Part_MName,1,1),'. ',P.Part_LName) as Contestant,
+T.Team_Name,T.Team_ID
+from criteria_score CS JOIN attended_culturalevents ACE ON ACE.ACE_ID = CS.ACE_ID
+JOIN Participants P ON P.Part_ID = ACE.Part_ID
+JOIN Teams T ON T.Team_ID = P.Team_ID
+JOIN Criteria_Cultural CC ON CS.Cr_ID = CC.Cr_ID
+JOIN Cultural_Events CE ON CE.Cul_ID = CC.Cul_ID
+JOIN Accounts A ON A.Acc_ID = CS.Acc_ID
+Where CE.Cul_Status = 'Active'
+
+
+*********************************************
+
+rpt_category
+
+Select
+Category_ID,Category_Name,Cul_ID,Cul_Name,Cr_Description,CrScore,
+(SUM(Cr_Computed)*(Category_Per/100))as total_Category,Cul_Percentage,Judge,
+Contestant,Team_Name,Team_ID
+from rpt_criteria_withcategory GROUP by Category_Name,Team_ID
+
+
+********************************************
+
+rpt_Cultural_with_Category
+
+Select
+Category_ID,Category_Name,Cul_ID,Cul_Name,Cr_Description,CrScore,(SUM(total_Category)*(Cul_Percentage/100))as total_Cultural,Cul_Percentage,Judge,
+Contestant,Team_Name,Team_ID
+from rpt_category GROUP by Cul_Name,Team_ID
+
+
+*****************************************
+
+rpt_cultural_withno_category
+
+Select
+Cul_ID,Cul_Name,Cr_Description,CrScore,(SUM(Cr_Computed)*(Cul_Percentage/100))as total_Cultural,Cul_Percentage,Judge,
+Contestant,Team_Name,Team_ID
+from rpt_criteria_withno_category GROUP by Cul_Name,Team_ID
+
+*****************************************
+
+rpt_SportsEvent
+
+Select SP.Sp_ID,SP.Sp_Name,SP.SP_Percentage,(SUM(S.S_CompScore)*SP.SP_Percentage/100)as total_sports,
+CONCAT(P.Part_FName,' ',SUBSTR(P.Part_MName,1,1),'. ',P.Part_LName) as Contestant,
+CONCAT(A.Acc_FName,' ',SUBSTR(A.Acc_MName,1,1),' ',A.Acc_LName)as Judge,T.Team_Name,T.Team_ID
+from sports_score S
+JOIN attended_sportsevents ATS ON ATS.AP_ID = S.AP_ID
+JOIN Sports_Events SP ON SP.Sp_ID = ATS.SP_ID
+JOIN Participants P ON P.Part_ID = ATS.Part_ID
+JOIN Teams T ON T.Team_ID = P.Team_ID
+JOIN Accounts A ON A.Acc_ID = S.Acc_ID
+GROUP BY T.Team_ID,SP.SP_Name
+
+
+****************************************
+

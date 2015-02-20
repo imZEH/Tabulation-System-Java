@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cultural" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Neil\\Documents\\NetBeansProjects\\Summer(Activity)\\Tabulation_System V1.4\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="culname" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$F{Cul_Name}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *,Contestant as name,SUM(total_cultural) as total FROM rpt_cultural_with_category CROSS JOIN Company c Where Cul_Name = $P{culname} group by contestant ORDER BY Cul_Name,total DESC;]]>
+	</queryString>
+	<field name="Category_ID" class="java.lang.Integer"/>
+	<field name="Category_Name" class="java.lang.String"/>
+	<field name="Cul_ID" class="java.lang.Integer"/>
+	<field name="Cul_Name" class="java.lang.String"/>
+	<field name="Cr_Description" class="java.lang.String"/>
+	<field name="CrScore" class="java.lang.Double"/>
+	<field name="total_Cultural" class="java.lang.Double"/>
+	<field name="Cul_Percentage" class="java.lang.String"/>
+	<field name="Judge" class="java.lang.String"/>
+	<field name="Contestant" class="java.lang.String"/>
+	<field name="Team_Name" class="java.lang.String"/>
+	<field name="Team_ID" class="java.lang.Integer"/>
+	<field name="JType" class="java.lang.String"/>
+	<field name="Comp_ID" class="java.lang.Long"/>
+	<field name="Comp_Name" class="java.lang.String"/>
+	<field name="Comp_Org" class="java.lang.String"/>
+	<field name="Comp_Add" class="java.lang.String"/>
+	<field name="Comp_Title" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="total" class="java.lang.Double"/>
+	<group name="thrid">
+		<groupExpression><![CDATA[$F{Category_ID}]]></groupExpression>
+	</group>
+	<title>
+		<band height="86" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="457" y="10" width="80" height="60"/>
+				<imageExpression><![CDATA["OragnizationLOGO.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="103" y="10" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comp_Title}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center">
+				<reportElement x="10" y="10" width="80" height="60"/>
+				<imageExpression><![CDATA["CompanyLOGO.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="103" y="30" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comp_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="66" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comp_Org}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="50" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comp_Add}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50">
+			<textField>
+				<reportElement x="103" y="15" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cul_Name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="50"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="culname">
+					<subreportParameterExpression><![CDATA[$P{culname}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_cultural_detailed_reports_MainEvent.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</columnHeader>
+	<summary>
+		<band height="105">
+			<subreport>
+				<reportElement x="0" y="29" width="555" height="76"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_Overall_Cultural_Results_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

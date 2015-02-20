@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Neil\\Documents\\NetBeansProjects\\Summer(Activity)\\Tabulation_System V1.4\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from rpt_overall_cultural CROSS JOIN Company ORDER BY TOTAL Desc]]>
+	</queryString>
+	<field name="CODE" class="java.lang.Integer"/>
+	<field name="Team_Name" class="java.lang.String"/>
+	<field name="TOTAL" class="java.lang.Double"/>
+	<field name="Comp_ID" class="java.lang.Long"/>
+	<field name="Comp_Name" class="java.lang.String"/>
+	<field name="Comp_Org" class="java.lang.String"/>
+	<field name="Comp_Add" class="java.lang.String"/>
+	<field name="Comp_Title" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="131" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="461" y="10" width="80" height="60"/>
+				<imageExpression><![CDATA["OragnizationLOGO.png"]]></imageExpression>
+			</image>
+			<image hAlign="Center">
+				<reportElement x="14" y="10" width="80" height="60"/>
+				<imageExpression><![CDATA["CompanyLOGO.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="107" y="66" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comp_Org}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="10" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comp_Title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="30" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comp_Name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="107" y="111" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cultural Event Overall Results]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="107" y="50" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comp_Add}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField pattern="yyyy.MMMMM.dd GGG hh:mm aaa">
+				<reportElement x="401" y="15" width="154" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="107" y="41" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Team]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="41" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Overall Score]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="107" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Team_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="-2" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="22" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="11" width="555" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[--------------------------------------------------Nothing Follows--------------------------------------------------]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="1" y="52" width="554" height="38"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_Overall_Cultural_Results_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

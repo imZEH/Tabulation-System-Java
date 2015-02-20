@@ -1,0 +1,296 @@
+****************************************************
+
+Create table Accounts(
+Acc_ID Integer NOT NULL AUTO_INCREMENT,
+Acc_FName varchar(25) NOT NULL,
+Acc_MName varchar(25) NOT NULL,
+Acc_LName varchar(25) NOT NULL,
+Acc_Gender VarChar(25) Not Null,
+Acc_Status varchar(25) NOT NULL,
+Acc_Type varchar(25) NOT NULL,
+Acc_Username varchar(25) NOT NULL,
+Acc_Password varchar(25) NOT NULL,
+Acc_Image blob,
+Acc_Address varchar(45) NOT NULL,
+Acc_ContactNumber varchar(45) NOT NULL,
+Acc_Path varchar(100) NOT NULL,
+Primary key(Acc_ID)
+)AUTO_INCREMENT=10000000;
+
+***************************************************
+
+Create Table Overall_Points(
+OP_ID Int Not Null AUTO_INCREMENT,
+OP_Percentage Double Not Null,
+OP_Status VarChar(25) Not Null,
+OP_Type VarChar(25) Not Null,
+Primary Key(OP_ID)
+)AUTO_INCREMENT=20000000;
+
+**************************************************
+
+Create table Sports_Ranking_Points(
+SRP_ID Integer Not Null AUTO_INCREMENT,
+SP_ID Integer Not Null,
+SRP_Points Integer Not Null,
+SRP_Rank VarChar(25) Not Null,
+Primary Key(SRP_ID),
+Foreign Key(SP_ID) references Sports_Events(SP_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=30000000;
+
+***************************************************
+
+Create Table Cultural_Events(
+Cul_ID Integer Not Null AUTO_INCREMENT,
+Acc_ID Integer Not Null,
+OP_ID Integer Not Null,
+Cul_Name VarChar(25) Not Null,
+Cul_Percentage VarChar(25) Not Null,
+Cul_Status VarChar(25) Not Null,
+Cul_Date VarChar(25) Not Null,
+Cul_Type VarChar(25) Not Null,
+Cul_Sched Date Not Null,
+Cul_Type_Judging VarChar(25) Not Null,
+Primary key(Cul_ID),
+Foreign Key(Acc_ID) references Accounts(Acc_ID),
+Foreign Key(OP_ID) references Overall_Points(OP_ID)
+On Delete Cascade 
+On Update Cascade
+)AUTO_INCREMENT=40000000;
+
+***************************************************
+
+Create Table Sports_Events(
+Sp_ID Integer Not Null AUTO_INCREMENT,
+Acc_ID Integer Not Null,
+OP_ID Integer Not Null,
+Sp_Percentage VarChar(25) Not Null,
+Sp_Name VarChar(25) Not Null,
+Sp_Status VarChar(25) Not Null,
+Sp_Type VarChar(25) Not Null,
+Sp_Sched VarChar(25) Not Null,
+Sp_Date Date Not Null,
+Primary key(Sp_ID),
+Foreign Key(Acc_ID) references Accounts(Acc_ID),
+Foreign Key(OP_ID) references Overall_Points(OP_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=50000000;
+
+***************************************************
+
+Create Table Sports_OverAll_Score(
+SOS_ID Integer Not Null AUTO_INCREMENT,
+Ap_ID Integer Not Null,
+SOS_TotalScore Double Not Null,
+Primary key(SOS_ID),
+Foreign Key(Ap_ID)References Attended_SportsEvents(Ap_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=60000000;
+
+***************************************************
+
+Create Table Criteria_Cultural(
+Cr_ID Integer Not Null AUTO_INCREMENT,
+Cul_ID Integer  Null,
+Category_ID Integer  Null,
+Cr_Description VarChar(25) Not Null,
+Cr_Percentage VarChar(25) Not Null,
+Primary Key(Cr_ID),
+Foreign Key(Category_ID) references Event_Category(Category_ID),
+Foreign Key(Cul_ID) references Cultural_Events(Cul_ID)
+)AUTO_INCREMENT=70000000;
+
+***************************************************
+
+Create Table Attended_CulturalEvents(
+ACE_ID Integer Not Null AUTO_INCREMENT,
+Part_ID Integer Not Null,
+Cul_ID Integer Not Null,
+ACE_Secnum Integer Null,
+Primary key(ACE_ID),
+Foreign Key(Cul_ID) references Cultural_Events(Cul_ID),
+Foreign Key(Part_ID) references Participants(part_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=80000000;
+
+***************************************************
+
+Create Table Attended_SportsEvents(
+Ap_ID Integer Not Null AUTO_INCREMENT,
+Sp_ID Integer Not Null,
+Part_ID Integer Not Null,
+Primary Key(Ap_ID),
+Foreign Key(Sp_ID) references Sports_Events(Sp_ID),
+Foreign Key(Part_ID) references Participants(Part_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=90000000;
+
+***************************************************
+
+Create Table Cultural_Ranking_Points(
+RP_ID Integer Not Null AUTO_INCREMENT,
+Cul_ID Integer Not Null,
+RP_Point Double Not Null,
+RP_Rank VarChar(25) Not Null,
+Primary Key(RP_ID),
+Foreign Key(Cul_ID) references Cultural_Events(Cul_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=10000000;
+
+***************************************************
+
+Create Table Event_Category(
+Category_ID Integer Not Null AUTO_INCREMENT,
+Cul_ID Integer Not Null,
+Category_Name Varchar(25) Not Null,
+Category_Per Double Not Null,
+Category_JudgingType VarChar(25) Not Null,
+Primary Key(Category_ID),
+Foreign Key(Cul_ID) References Cultural_Events(Cul_ID)
+)AUTO_INCREMENT=110000000;
+
+***************************************************
+
+Create Table Participants(
+Part_ID Integer Not Null AUTO_INCREMENT,
+Team_ID Integer Not Null,
+Part_FName VarChar(25) Not Null,
+Part_MName VarChar(25) Not Null,
+Part_LName VarChar(25) Not Null,
+Part_Address VarChar(25) Not Null,
+Part_Gender Varchar(25) Not Null,
+Part_ContactNumber VarChar(25) Not Null,
+Part_Status Varchar(25) Not Null,
+Part_Pic Blob,
+Part_Path VarChar(100) Not Null,
+Primary key(Part_ID),
+Foreign key(Team_ID) references Teams(Team_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=120000000;
+
+***************************************************
+
+Create Table Sports_Score(
+S_Score_ID Integer Not Null AUTO_INCREMENT,
+Ap_ID Integer Not Null,
+S_Given_Score Double Not Null,
+S_CompScore Double Not Null,
+Primary key(S_Score_ID),
+Foreign key(Ap_ID) references Attended_SportsEvents(Ap_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=130000000;
+
+***************************************************
+
+Create Table Cultural_OverAll_Score(
+COS_ID Integer Not Null AUTO_INCREMENT,
+ACE_ID Integer Not Null,
+COS_TotalScore Double Not Null,
+Primary key(COS_ID),
+Foreign Key(ACE_ID) references Attended_CulturalEvents(ACE_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=140000000;
+
+***************************************************
+
+Create Table Criteria_Score(
+CrScore_ID Integer Not Null AUTO_INCREMENT,
+Cr_ID Integer Not Null,
+ACE_ID Integer Not Null,
+VP_ID Integer Not Null,
+CrScore Double Not Null,
+Cr_Computed Double Not Null DEFAULT 0,
+Primary key(CrScore_ID),
+Foreign Key(Cr_ID) references Criteria_Cultural(Cr_ID),
+Foreign Key(ACE_ID) references Attended_CulturalEvents(ACE_ID),
+Foreign Key(VP_ID) references Voters_Password(VP_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=150000000;
+
+***************************************************
+
+Create Table Voters_Password(
+VP_ID Integer Not Null AUTO_INCREMENT,
+VP_Pass VarChar(25) Not Null,
+Vp_Status VarChar(25) Not Null,
+Primary Key(VP_ID)
+)AUTO_INCREMENT=160000000;
+
+***************************************************
+
+Create Table Teams(
+Team_ID Integer Not Null AUTO_INCREMENT,
+Team_Name VarChar(25) Not Null,
+Team_Number Integer Not Null,
+Team_logo Blob,
+Team_Path VarChar(100) not Null,
+Team_Status Varchar(25) Not Null,
+Team_Color VarChar(25) Not Null,
+Primary key(Team_ID)
+)AUTO_INCREMENT=170000000;
+
+***************************************************
+
+Create Table Results(
+Res_ID Integer Not Null AUTO_INCREMENT,
+Crp_Id Integer Not Null,
+Sgrp_Id Integer Not Null,
+Primary Key(Res_ID),
+Foreign Key(Sgrp_Id)References Sport_Generated_RakingPoints(Sgrp_Id),
+Foreign Key(Crp_Id)References Cultural_Generated_Ranking_Points(Crp_Id)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=180000000;
+
+***************************************************
+
+Create Table Cultural_Generated_Ranking_Points(
+Crp_ID Integer Not Null AUTO_INCREMENT,
+COS_ID Integer Not Null,
+RP_ID Integer Not Null,
+Primary Key(Crp_ID ),
+Foreign Key(COS_ID) References Cultural_Overall_Scor(COS_ID),
+Foreign key(RP_ID) References Cultural_Ranking_Points(RP_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT = 190000000;
+
+**************************************************
+
+Create Table Sport_Generated_RakingPoints(
+Sgrp_ID Integer Not Null AUTO_INCREMENT,
+SOS_ID Integer Not Null,
+SRP_ID Integer Not Null,
+Primary key(Sgrp_ID),
+Foreign key(SOS_ID) References Sports_OverAll_Score(SOS_ID) ,
+Foreign Key(SRP_ID) References Sports_Ranking_Points(SRP_ID) 
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT = 20000000;
+
+************************************************
+
+Create Table Event_Video(
+Event_ID Integer Not Null AUTO_INCREMENT,
+Video Blob,
+Cul_ID Integer Not Null,
+Sp_ID Integer Not Null,
+Primary key(Event_ID),
+Foreign key(Cul_ID) references Cultural_Events(Cul_ID),
+Foreign key(Sp_ID) references Sports_Events(Sp_ID)
+On Delete Cascade
+On Update Cascade
+)AUTO_INCREMENT=190000000;
+
+***************************************************
