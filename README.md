@@ -23,8 +23,8 @@ Netbeans - the IDE use to develop<br>
 MYSQL Query Browser - DBMS GUI Tool<br>
 
 <h3>Contributor</h3>
-Neil Ragadio - ngr_24@ymail.com<br>
-Ando Bellesco - andobellesco@yahoo.com<br>
+Neil Ragadio<br>
+Ando Bellesco<br>
 
 
-Questions and comments email me at pi.neilr23@gmail.com.
+Questions and comments feel free to create an issue to this repository.
